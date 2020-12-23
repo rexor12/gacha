@@ -13,10 +13,7 @@ class InMemoryEntityProvider(EntityProviderInterface):
         self._entities = self._transform_entities(entities)
 
     def get_entity(self, collection_name: str, entity_id: int, default_value: EntityInterface = None) -> EntityInterface:
-        entities_by_type = self._entities.get(collection_name, None)
-        if not entities_by_type:
-            return default_value
-        return entities_by_type.get(entity_id, default_value)
+        return self._entities.get(collection_name, {}).get(entity_id, default_value)
 
     def get_collection(self, collection_name: str) -> Generator[EntityInterface, None, None]:
         entities_by_type = self._entities.get(collection_name, {})
