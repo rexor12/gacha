@@ -6,8 +6,6 @@ from json import load
 from typing import Generator
 
 class JsonEntityProvider(EntityProviderInterface):
-    _entity_converters: dict[str, EntityConverterInterface]
-
     def __init__(self, database_json_file_path, log: LogBase, entity_converters: list[EntityConverterInterface] = []):
         super().__init__()
         self._log = log
