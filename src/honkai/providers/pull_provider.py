@@ -21,11 +21,21 @@ class PullProvider(PullProviderInterface):
     def get_pool_codes(self) -> list[str]:
         return [code for code in self._pools.keys()]
 
-    def pull(self, supply_type: str, pull_count: int = 10) -> Generator[Pull, None, None]:
-        supply_type = supply_type.lower()
-        pool = self._pools.get(supply_type, None)
+    def has_pool(self, pool_code: str) -> bool:
+        return self._pools.get(pool_code, None) is not None
+
+    def get_pool_name(self, pool_code: str) -> str:
+        pool = self._pools.get(pool_code, None)
+        if pool is None:
+            self._log.error(f"Attempted to get the name of an unexistent pool with the code '{pool_code}'.")
+            raise ValueError("The specified pool doesn't exist.")
+        return pool.name
+
+    def pull(self, pool_code: str, pull_count: int = 10) -> Generator[Pull, None, None]:
+        pool_code = pool_code.lower()
+        pool = self._pools.get(pool_code, None)
         if not pool:
-            self._log.error(f"Attempted to pull from the unexistent pool with the code '{supply_type}'.")
+            self._log.error(f"Attempted to pull from an unexistent pool with the code '{pool_code}'.")
             raise ValueError("The specified pool doesn't exist.")
         pull_count = max(PULL_COUNT_MIN, min(pull_count, PULL_COUNT_MAX))
         return self._pull_items(pool, pull_count)

@@ -5,10 +5,6 @@ class ItemPrototype(EntityInterface):
     Describes the properties of an item. This class may be inherited for additional properties.
     """
 
-    name: str
-    item_type_id: int
-    rank_id: int
-
     def __init__(self, id: int, name: str):
         """
         Initializes a new instance of `Item`.
