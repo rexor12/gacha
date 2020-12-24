@@ -1,13 +1,13 @@
 from .entity_provider_interface import EntityProviderInterface
 from ..entities import EntityInterface
 from ..logging.log_base import LogBase
-from typing import Generator, Sequence
+from typing import Generator, Sequence, Tuple
 
 class InMemoryEntityProvider(EntityProviderInterface):
     """
     Implementation of the ``EntityProviderInterface`` that holds collections of entities in the memory.
     """
-    def __init__(self, entities: Sequence[tuple[str, EntityInterface]], log: LogBase):
+    def __init__(self, entities: Sequence[Tuple[str, EntityInterface]], log: LogBase):
         super().__init__()
         self._log = log
         self._entities = self._transform_entities(entities)
@@ -20,7 +20,7 @@ class InMemoryEntityProvider(EntityProviderInterface):
         for entity in entities_by_type.values():
             yield entity
     
-    def _transform_entities(self, entities: Sequence[tuple[str, EntityInterface]]):
+    def _transform_entities(self, entities: Sequence[Tuple[str, EntityInterface]]):
         transformed_entities = {}
         for collection_name, entity in entities:
             entities_by_type = transformed_entities.get(collection_name, None)

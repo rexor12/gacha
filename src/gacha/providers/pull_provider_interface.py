@@ -1,10 +1,11 @@
 from .entity_provider_interface import EntityProviderInterface
+from typing import List
 
 class PullProviderInterface:
     def __init__(self, entityProvider: EntityProviderInterface):
         pass
 
-    def get_pool_codes(self) -> list[str]:
+    def get_pool_codes(self) -> List[str]:
         raise NotImplementedError
 
     def has_pool(self, pool_code: str) -> bool:

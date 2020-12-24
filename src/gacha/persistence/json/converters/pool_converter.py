@@ -1,12 +1,12 @@
 from .entity_converter_interface import EntityConverterInterface
 from gacha.entities import LootTableGroup, Pool
-from typing import Any
+from typing import Any, Dict
 
 class PoolConverter(EntityConverterInterface):
     def __init__(self):
         super().__init__("pools")
 
-    def convert(self, id: int, json_object: dict[str, Any]) -> Pool:
+    def convert(self, id: int, json_object: Dict[str, Any]) -> Pool:
         entity = Pool(id, json_object.get("code", ""), json_object.get("name", "Unknown"))
         entity.is_available = bool(json_object.get("available", False))
         for json_loot_table in json_object.get("loot_table", []):

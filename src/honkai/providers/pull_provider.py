@@ -7,7 +7,7 @@ from gacha.resolvers import ItemResolverInterface
 from gacha.utils import isclose
 from gacha.utils.entity_provider_utils import get_item, get_item_rank, get_item_type
 from random import choice, choices
-from typing import Generator
+from typing import Dict, Generator, List
 
 PULL_COUNT_MIN = 1
 PULL_COUNT_MAX = 10
@@ -18,7 +18,7 @@ class PullProvider(PullProviderInterface):
         self._log = log
         self._pools = self._create_pools(item_resolver)
 
-    def get_pool_codes(self) -> list[str]:
+    def get_pool_codes(self) -> List[str]:
         return [code for code in self._pools.keys()]
 
     def has_pool(self, pool_code: str) -> bool:
@@ -55,8 +55,8 @@ class PullProvider(PullProviderInterface):
                 continue
             yield Pull(item.id, pulled_item.name, 1, is_rare)
 
-    def _create_pools(self, item_resolver: ItemResolverInterface) -> dict[str, Pool]:
-        pools = {}
+    def _create_pools(self, item_resolver: ItemResolverInterface) -> Dict[str, Pool]:
+        pools: Dict[str, Pool] = {}
         for pool_prototype in self._get_pools():
             if not pool_prototype.is_available:
                 self._log.info(f"The pool '{pool_prototype.id}' is disabled.")
@@ -69,7 +69,7 @@ class PullProvider(PullProviderInterface):
                 if len(loot_table_group.item_ids) == 0:
                     self._log.warning("Ignored loot table with no items.")
                     continue
-                items = list[GachaItem]()
+                items: List[GachaItem] = []
                 for item_id in loot_table_group.item_ids:
                     for item in item_resolver.resolve(item_id):
                         items.append(item)
