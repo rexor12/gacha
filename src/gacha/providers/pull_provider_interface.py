@@ -14,5 +14,5 @@ class PullProviderInterface:
     def get_pool_name(self, pool_code: str) -> str:
         raise NotImplementedError
 
-    def pull(self, supply_type: str, pull_count: int):
+    def pull(self, pool_code: str, pull_count: int):
         raise NotImplementedError

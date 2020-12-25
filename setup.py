@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="gacha-rexor12",
-    version="0.1",
+    version="1.0.0",
     author="rexor12",
     author_email="rrexor@gmail.com",
     description="Generic gacha system for games.",

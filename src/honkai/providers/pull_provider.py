@@ -32,7 +32,6 @@ class PullProvider(PullProviderInterface):
         return pool.name
 
     def pull(self, pool_code: str, pull_count: int = 10) -> Generator[Pull, None, None]:
-        pool_code = pool_code.lower()
         pool = self._pools.get(pool_code, None)
         if not pool:
             self._log.error(f"Attempted to pull from an unexistent pool with the code '{pool_code}'.")

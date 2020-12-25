@@ -4,9 +4,6 @@ from ..logging.log_base import LogBase
 from typing import Generator, Sequence, Tuple
 
 class InMemoryEntityProvider(EntityProviderInterface):
-    """
-    Implementation of the ``EntityProviderInterface`` that holds collections of entities in the memory.
-    """
     def __init__(self, entities: Sequence[Tuple[str, EntityInterface]], log: LogBase):
         super().__init__()
         self._log = log
