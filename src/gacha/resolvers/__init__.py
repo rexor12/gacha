@@ -1,1 +1,2 @@
 from .item_resolver_interface import ItemResolverInterface
+from .simple_item_resolver import SimpleItemResolver

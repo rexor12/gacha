@@ -1,3 +1,4 @@
 from .entity_provider_interface import EntityProviderInterface
 from .in_memory_entity_provider import InMemoryEntityProvider
 from .pull_provider_interface import PullProviderInterface
+from .simple_pull_provider import SimplePullProvider

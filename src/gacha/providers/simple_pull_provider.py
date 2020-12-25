@@ -1,19 +1,21 @@
-from ..models import Item, Pool, Pull
-from gacha.entities import Pool as PoolPrototype
-from gacha.logging import LogBase
-from gacha.models import Item as GachaItem
-from gacha.providers import PullProviderInterface, EntityProviderInterface
-from gacha.resolvers import ItemResolverInterface
-from gacha.utils import isclose
-from gacha.utils.entity_provider_utils import get_item, get_item_rank, get_item_type
+from ..models.pulls import Item, Pool, Pull
+from ..entities import Pool as PoolPrototype
+from ..logging import LogBase
+from ..models import VirtualItem
+from ..providers import PullProviderInterface, EntityProviderInterface
+from ..resolvers import ItemResolverInterface
+from ..utils import isclose
+from ..utils.entity_provider_utils import get_item, get_item_rank, get_item_type
 from random import choice, choices
 from typing import Dict, Generator, List
 
-PULL_COUNT_MIN = 1
-PULL_COUNT_MAX = 10
+DEFAULT_PULL_COUNT_MIN = 1
+DEFAULT_PULL_COUNT_MAX = 10
 
-class PullProvider(PullProviderInterface):
+class SimplePullProvider(PullProviderInterface):
     def __init__(self, entity_provider: EntityProviderInterface, item_resolver: ItemResolverInterface, log: LogBase):
+        self.pull_count_min = DEFAULT_PULL_COUNT_MIN
+        self.pull_count_max = DEFAULT_PULL_COUNT_MAX
         self._entity_provider = entity_provider
         self._log = log
         self._pools = self._create_pools(item_resolver)
@@ -31,12 +33,12 @@ class PullProvider(PullProviderInterface):
             raise ValueError("The specified pool doesn't exist.")
         return pool.name
 
-    def pull(self, pool_code: str, pull_count: int = 10) -> Generator[Pull, None, None]:
+    def pull(self, pool_code: str, pull_count: int = 1) -> Generator[Pull, None, None]:
         pool = self._pools.get(pool_code, None)
         if not pool:
             self._log.error(f"Attempted to pull from an unexistent pool with the code '{pool_code}'.")
             raise ValueError("The specified pool doesn't exist.")
-        pull_count = max(PULL_COUNT_MIN, min(pull_count, PULL_COUNT_MAX))
+        pull_count = max(self.pull_count_min, min(pull_count, self.pull_count_max))
         return self._pull_items(pool, pull_count)
 
     def _pull_items(self, pool: Pool, pull_count: int):
@@ -68,7 +70,7 @@ class PullProvider(PullProviderInterface):
                 if len(loot_table_group.item_ids) == 0:
                     self._log.warning("Ignored loot table with no items.")
                     continue
-                items: List[GachaItem] = []
+                items: List[VirtualItem] = []
                 for item_id in loot_table_group.item_ids:
                     for item in item_resolver.resolve(item_id):
                         items.append(item)

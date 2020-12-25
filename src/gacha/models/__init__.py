@@ -1,1 +1,1 @@
-from .item import Item
+from .virtual_item import VirtualItem

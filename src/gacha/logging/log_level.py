@@ -8,3 +8,4 @@ class LogLevel(IntEnum):
     WARNING = 3
     ERROR = 4
     CRITICAL = 5
+    NONE = 6
