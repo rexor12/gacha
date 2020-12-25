@@ -21,17 +21,17 @@ Currently, the package isn't available in the PyPi repository, therefore you can
 ```sh
 # To install the latest available version, you can specify the main branch
 # Linux/macOS
-python3 -m pip install -U gacha-rexor12 git+https://github.com/rexor12/gacha.git@main
+python3 -m pip install -U git+https://github.com/rexor12/gacha.git@main
 
 # Windows
-py -3 -m pip install -U gacha-rexor12 git+https://github.com/rexor12/gacha.git@main
+py -3 -m pip install -U git+https://github.com/rexor12/gacha.git@main
 
 # To install a stable version, you can specify the exact branch
 # Linux/macOS
-python3 -m pip install -U gacha-rexor12 git+https://github.com/rexor12/gacha.git@develop/2.0
+python3 -m pip install -U git+https://github.com/rexor12/gacha.git@develop/2.0
 
 # Windows
-py -3 -m pip install -U gacha-rexor12 git+https://github.com/rexor12/gacha.git@develop/2.0
+py -3 -m pip install -U git+https://github.com/rexor12/gacha.git@develop/2.0
 
 # If you're using requirements.txt, you can add the following line
 git+https://github.com/rexor12/gacha.git@main
