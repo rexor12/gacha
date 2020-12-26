@@ -5,22 +5,33 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="gacha-rexor12",
-    version="1.0.0",
+    version="1.0.1",
     author="rexor12",
     author_email="rrexor@gmail.com",
     description="Generic gacha system for games.",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    license="MIT",
     url="https://github.com/rexor12/gacha",
-    packages=setuptools.find_packages(where="src"),
+    project_urls={
+        "Issue tracker": "https://github.com/rexor12/gacha/issues"
+    },
+    packages=setuptools.find_packages(where="gacha"),
     package_dir={
-        "": "src",
+        "": "gacha"
     },
     classifiers=[
-        "Programming Language :: Python :: 3",
+        "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
+        "Intended Audience :: Developers",
+        "Natural Language :: English",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Topic :: Internet",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Utilities"
     ],
-    python_requires=">=3.8",
-    license="MIT",
+    python_requires=">=3.8"
 )

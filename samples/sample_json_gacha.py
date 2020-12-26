@@ -9,7 +9,7 @@ log = ConsoleLog(LogLevel.INFORMATION)
 
 log.info("Loading Generic Gacha System...")
 log.debug("Initializing entity provider...")
-entity_provider = JsonEntityProvider("./res/database.json", log, [
+entity_provider = JsonEntityProvider("./samples/res/database.json", log, [
     ItemConverter(), ItemRankConverter(), ItemTypeConverter(), PoolConverter()
 ])
 log.debug("Entity provider initialized.")
