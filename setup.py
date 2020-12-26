@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="gacha-rexor12",
-    version="1.0.1",
+    version="2.0.0",
     author="rexor12",
     author_email="rrexor@gmail.com",
     description="Generic gacha system for games.",
@@ -16,10 +16,7 @@ setuptools.setup(
     project_urls={
         "Issue tracker": "https://github.com/rexor12/gacha/issues"
     },
-    packages=setuptools.find_packages(where="gacha"),
-    package_dir={
-        "": "gacha"
-    },
+    packages=[ "gacha" ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
