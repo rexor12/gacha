@@ -1,1 +1,2 @@
+from .empty_entity import EmptyEntity
 from .fake_entity_provider import FakeEntityProvider
