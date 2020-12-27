@@ -1,6 +1,6 @@
 # Table of contents
 - [Table of contents](#table-of-contents)
-- [Generic Gacha System](#generic-gacha-system)
+- [Overview](#overview)
 - [Installation](#installation)
 - [Usage example](#usage-example)
 - [LogBase](#logbase)
@@ -8,9 +8,9 @@
 - [EntityResolverInterface](#entityresolverinterface)
 - [PullProviderInterface](#pullproviderinterface)
 
-# Generic Gacha System
+# Overview
 
-The Generic Gacha System (GGS) is a Python package that aims to provide its users a way to easily implement a [gacha](https://en.wikipedia.org/wiki/Gacha_game) system in your video game by exposing interfaces for retrieving data from persistence, transforming that data and processing it for emulating pulls/rolls.
+[gacha.py](https://github.com/rexor12/gacha.py) is a Python package that aims to provide its users a way to easily implement a [gacha](https://en.wikipedia.org/wiki/Gacha_game) system in your video game by exposing interfaces for retrieving data from persistence, transforming that data and processing it for emulating pulls/rolls.
 
 # Installation
 
@@ -21,20 +21,20 @@ Currently, the package isn't available in the PyPi repository, therefore you can
 ```sh
 # To install the latest available version, you can specify the main branch
 # Linux/macOS
-python3 -m pip install -U git+https://github.com/rexor12/gacha.git@main
+python3 -m pip install -U git+https://github.com/rexor12/gacha.py.git@main
 
 # Windows
-py -3 -m pip install -U git+https://github.com/rexor12/gacha.git@main
+py -3 -m pip install -U git+https://github.com/rexor12/gacha.py.git@main
 
 # To install a stable version, you can specify the exact branch
 # Linux/macOS
-python3 -m pip install -U git+https://github.com/rexor12/gacha.git@develop/2.0
+python3 -m pip install -U git+https://github.com/rexor12/gacha.py.git@develop/2.0
 
 # Windows
-py -3 -m pip install -U git+https://github.com/rexor12/gacha.git@develop/2.0
+py -3 -m pip install -U git+https://github.com/rexor12/gacha.py.git@develop/2.0
 
 # If you're using requirements.txt, you can add the following line
-git+https://github.com/rexor12/gacha.git@main
+git+https://github.com/rexor12/gacha.py.git@main
 ```
 
 # Usage example
@@ -48,36 +48,29 @@ Please, refer to the sample (source code) for the full implementation.
 log = ConsoleLog(LogLevel.INFORMATION)
 
 # In this case, our database comes from a JSON file, so let's instantiate the JsonEntityProvider.
-log.debug("Initializing entity provider...")
-entity_provider = JsonEntityProvider("./src/database.json", log, [
+entity_provider = JsonEntityProvider("./samples/res/database.json", log, [
     # It's important to pass to it the entity converters.
     # In our case, our database has items, item ranks, item types and item pools.
     ItemConverter(), ItemRankConverter(), ItemTypeConverter(), PoolConverter()
 ])
-log.debug("Entity provider initialized.")
 
 # The item resolver determines how to interpret item prototypes from the database.
-log.debug("Initializing item resolver...")
-item_resolver = ItemResolver(entity_provider)
-log.debug("Item resolver initialized.")
+item_resolver = SimpleItemResolver(entity_provider)
 
 # The pull provider defines the logic of the gacha pulls. In our implementation, it takes the entity provider and the item resolver to construct its item pools.
-log.debug("Initializing pull provider...")
-pull_provider = PullProvider(entity_provider, item_resolver, log)
-log.debug("Available pools: {0}".format(str.join(", ", pull_provider.get_pool_codes())))
-log.debug("Pull provider initialized.")
-log.info("Gacha system initialized.")
+pull_provider = SimplePullProvider(entity_provider, item_resolver, log)
+# If you don't like the default pull count limitation, you can set it after initialization.
+pull_provider.pull_count_min = 2
+pull_provider.pull_count_max = 5
 
-# Now that everything has been set up, we can do some pulls. :)
-log.info("Simulating pulls...")
-for pull in pull_provider.pull("eq", 10):
-    log.info(f"{pull.name} x{pull.count} ({pull.is_rare})")
-log.info("Pull simulation finished.")
+# Now that everything has been set up, we can pull some items. :)
+for pull in pull_provider.pull("common", 10):
+    log.info("{} x{}{}".format(pull.name, pull.count, " (Rare)" if pull.is_rare else ""))
 ```
 
 # LogBase
 
-An abstract base class for a log message writer. In case you already have a logging system, you can create a simple implementation for this class that routes the requests from GGS to your logger implementation.
+An abstract base class for a log message writer. In case you already have a logging system, you can create a simple implementation for this class that routes the requests from the package to your logger implementation.
 
 Currently, the following implementations are available:
 - **EmptyLog**: It drops every request, thus no log messages are written anywhere. It can be useful for both unit testing purposes or in case you wouldn't like to have any logs written.

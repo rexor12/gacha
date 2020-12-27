@@ -4,17 +4,17 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="gacha-rexor12",
-    version="1.0.2",
+    name="gacha.py",
+    version="1.0.3",
     author="rexor12",
     author_email="rrexor@gmail.com",
-    description="Generic gacha system for games.",
+    description="A simple, reusable video game gacha library for Python projects.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license="MIT",
-    url="https://github.com/rexor12/gacha",
+    url="https://github.com/rexor12/gacha.py",
     project_urls={
-        "Issue tracker": "https://github.com/rexor12/gacha/issues"
+        "Issue tracker": "https://github.com/rexor12/gacha.py/issues"
     },
     packages=[ "gacha" ],
     classifiers=[
