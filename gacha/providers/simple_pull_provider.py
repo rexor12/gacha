@@ -60,7 +60,7 @@ class SimplePullProvider(PullProviderInterface):
         pools: Dict[str, Pool] = {}
         for pool_prototype in self._get_pools():
             if not pool_prototype.is_available:
-                self._log.info(f"The pool '{pool_prototype.id}' is disabled.")
+                self._log.info(f"Ignored disabled pool '{pool_prototype.name}'.")
                 continue
             pool = Pool(pool_prototype.name)
             for loot_table_group in pool_prototype.loot_table:
