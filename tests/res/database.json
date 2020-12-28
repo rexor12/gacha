@@ -1,0 +1,73 @@
+{
+    "simples": {
+        "0": {
+            "prop1": "Prop One",
+            "prop2": "Prop Two",
+            "array": [
+                "1", "2", "3"
+            ]
+        },
+        "1": {},
+        "2": {}
+    },
+    "no_converter": {},
+	"item_ranks": {
+		"0": {
+			"name": "Common"
+		},
+		"1": {
+			"name": "Epic",
+			"is_rare": true
+		}
+	},
+	"item_types": {
+		"0": {
+			"name": "Equipment"
+		},
+		"1": {
+			"name": "Junk",
+			"is_multi": true,
+			"multi_min": 1,
+			"multi_max": 3
+		}
+	},
+	"items": {
+		"0": {
+			"name": "Sword",
+			"type": 0,
+			"rank": 0
+		},
+		"1": {
+			"name": "Strong Sword",
+			"type": 0,
+			"rank": 1
+		},
+		"2": {
+			"name": "Tin Can",
+			"type": 1,
+			"rank": 0
+		}
+    },
+    "pools": {
+		"0": {
+			"name": "Common Loot Box",
+			"code": "common",
+			"available": true,
+			"loot_table": [
+				{
+					"rate": 10,
+					"items": [
+						"0"
+					]
+				},
+				{
+					"rate": 90,
+					"items": [
+						"1",
+						"2"
+					]
+				}
+			]
+		}
+	}
+}

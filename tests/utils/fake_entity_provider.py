@@ -8,7 +8,7 @@ class FakeEntityProvider(EntityProviderInterface):
         self._collections = collections
 
     def get_entity(self, collection_name: str, entity_id: int, default_value: EntityInterface = None) -> EntityInterface:
-        return self._collections.get(collection_name, {}).get(entity_id, None)
+        return self._collections.get(collection_name, {}).get(entity_id, default_value)
 
     def get_collection(self, collection_name: str) -> Generator[EntityInterface, None, None]:
-        return self._collections.get(collection_name, {})
+        return self._collections.get(collection_name, {}).values()

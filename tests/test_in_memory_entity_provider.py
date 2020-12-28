@@ -30,6 +30,23 @@ class TestInMemoryEntityProvider(unittest.TestCase):
         self.assertIsNotNone(result)
         result_list = list(result)
         self.assertListEqual(result_list, [])
+        
+    def test_get_collection_should_return_collection_when_exists(self):
+        entity1 = EmptyEntity(1)
+        entity2 = EmptyEntity(2)
+        entity3 = EmptyEntity(3)
+        subject = InMemoryEntityProvider([
+            ("c1", entity1),
+            ("c2", entity2),
+            ("c1", entity3)
+        ], EmptyLog())
+        result = subject.get_collection("c1")
+        self.assertIsNotNone(result)
+        result_dict = dict([(item.id, item) for item in result])
+        self.assertDictEqual(result_dict, {
+            entity1.id: entity1,
+            entity3.id: entity3
+        })
 
 if __name__ == "__main__":
     unittest.main()
