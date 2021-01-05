@@ -16,7 +16,7 @@ setuptools.setup(
     project_urls={
         "Issue tracker": "https://github.com/rexor12/gacha.py/issues"
     },
-    packages=[ "gacha" ],
+    packages = setuptools.find_packages(exclude=["tests*"], include=["gacha*"]),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
